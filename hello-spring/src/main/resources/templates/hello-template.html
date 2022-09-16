@@ -1,0 +1,7 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p th:text="'hello ' + ${name}">hello! empty</p>
+<!-- hello! empty는 안 넣어도 상관 없지만 서버 없이 HTML을 볼 때 띄워지고 템플릿 엔진으로 동작하면 text=""안의 값으로 치환된다.
+ ${}-> 모델에서 키 값을 꺼내는 것-->
+</body>
+</html>
