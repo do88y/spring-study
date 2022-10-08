@@ -4,9 +4,12 @@ import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
+@Component
 public class OrderServiceImpl implements OrderService {
 
     // final은 무조건 생성자를 통해 할당되어야 함
@@ -15,6 +18,7 @@ public class OrderServiceImpl implements OrderService {
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();  // 할인 정책 참고 위해
 //    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();  // 바뀐 할인정책 적용-> OrderServiceImpl의 코드를 바꿔야 함-> OCP위반
 
+    @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
