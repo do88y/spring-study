@@ -1,25 +1,25 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import hello.core.member.MemoryMemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.stereotype.Component;
 
-import javax.sql.DataSource;
-
 @Component
+//@RequiredArgsConstructor  // 필드를 final이 붙은 필드를 파라미터로 받는 생성자를 자동으로 만들어 줌
 public class OrderServiceImpl implements OrderService {
 
     // final은 무조건 생성자를 통해 할당되어야 함
     private final MemberRepository memberRepository;  // 회원 찾기 위해
     private final DiscountPolicy discountPolicy;  // 구체에 의존하지 않고 추상에만 의존-> NullPointerExeption
-//    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();  // 할인 정책 참고 위해
-//    private final DiscountPolicy discountPolicy = new RateDiscountPolicy();  // 바뀐 할인정책 적용-> OrderServiceImpl의 코드를 바꿔야 함-> OCP위반
 
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
         this.discountPolicy = discountPolicy;
     }
