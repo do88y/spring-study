@@ -1,7 +1,9 @@
 package jpabook.jpashop.domain;
 
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -15,6 +17,7 @@ import static javax.persistence.FetchType.*;
 @Table(name = "orders")  // 이름을 적지 않으면 관례로 order가 되기 때문에 명시해줘야 함
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)  //생성자 protected로 막아놓은 것-> 롬복으로
 public class Order {
 
     @Id
@@ -64,4 +67,45 @@ public class Order {
         order.setMember(member);
     }
     */
+
+    //==생성 메서드==// 연관관계를 다 걸면서 세팅을 하고 상태와 주문시간 정보까지-> 앞으로 변경해야 하면 이것만 변경하면 됨
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+    //==비즈니스 로직==//
+    /**
+     * 주문 취소
+     */
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new IllegalStateException("이미 배송온료된 상품은 취소가 불가능합니다.");
+        }
+
+        this.setStatus(OrderStatus.CANCEL);
+        for (OrderItem orderItem : orderItems) {
+            orderItem.cancel();  //각각의 주문마다 취소
+        }
+    }
+
+    //==조회 로직==//
+
+    /**
+     * 전체 주문 가격 조회
+     */
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getOrder().getTotalPrice();
+        }
+        return totalPrice;
+    }
 }

@@ -23,5 +23,5 @@ public class Delivery {
     private Address address;
 
     @Enumerated(EnumType.STRING)  //ORDINAL이 기본인데 쓰면X(숫자로 순서를 지정해서 중간에 추가되었을 경우 DB에서 순서가 밀림)
-    private DiliveryStatus status;  // READY, CAMP
+    private DeliveryStatus status;  // READY, COMP
 }
