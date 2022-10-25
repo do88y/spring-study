@@ -17,17 +17,14 @@ public class JpaMain {
         tx.begin();
 
         try {
-//            Member findMember = em.find(Member.class, 1L);
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(1)
-                    .setMaxResults(8)
-                    .getResultList();
+            //영속
+            Member member = new Member(200L, "member200");
+            em.persist(member);
 
-            for (Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
+            em.flush();
+            System.out.println("=====================");
 
-            tx.commit();
+            tx.commit();  //이 시점에 쿼리 날림
         } catch (Exception e) {
             tx.rollback();
         }finally {
