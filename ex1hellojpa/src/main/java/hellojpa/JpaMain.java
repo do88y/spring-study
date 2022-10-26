@@ -7,7 +7,7 @@ import javax.persistence.Persistence;
 import java.util.List;
 
 public class JpaMain {
-
+    
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");  //애플리케이션 로딩 시점에 DB당 하나만 만들어놔야
 
@@ -17,12 +17,13 @@ public class JpaMain {
         tx.begin();
 
         try {
-            //영속
-            Member member = new Member(200L, "member200");
-            em.persist(member);
 
-            em.flush();
-            System.out.println("=====================");
+            Member member = new Member();
+            member.setId(1L);
+            member.setUsername("A");
+            member.setRoleType(RoleType.USER);
+
+            em.persist(member);
 
             tx.commit();  //이 시점에 쿼리 날림
         } catch (Exception e) {
