@@ -1,13 +1,12 @@
-package hellojpa;
+package jpabook.jpashop;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpaMain {
-    
+
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");  //애플리케이션 로딩 시점에 DB당 하나만 만들어놔야
 
@@ -17,26 +16,6 @@ public class JpaMain {
         tx.begin();
 
         try {
-
-            Member member1 = new Member();
-            member1.setUsername("A");
-
-            Member member2 = new Member();
-            member2.setUsername("B");
-
-            Member member3 = new Member();
-            member3.setUsername("C");
-
-            System.out.println("==================");
-
-            em.persist(member1);
-//            em.persist(member2);
-//            em.persist(member3);
-
-            System.out.println("member1 = " + member1.getId());
-            System.out.println("member2 = " + member2.getId());
-            System.out.println("member3 = " + member3.getId());
-            System.out.println("==================");
 
             tx.commit();  //이 시점에 쿼리 날림
         } catch (Exception e) {
