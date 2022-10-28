@@ -18,25 +18,24 @@ public class JpaMain {
 
         try {
 
-            Member member1 = new Member();
-            member1.setUsername("A");
+            //저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-            Member member2 = new Member();
-            member2.setUsername("B");
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
 
-            Member member3 = new Member();
-            member3.setUsername("C");
+            em.persist(member);
 
-            System.out.println("==================");
+            em.flush();
+            em.clear();
 
-            em.persist(member1);
-//            em.persist(member2);
-//            em.persist(member3);
+            Member findMember = em.find(Member.class, member.getId());
 
-            System.out.println("member1 = " + member1.getId());
-            System.out.println("member2 = " + member2.getId());
-            System.out.println("member3 = " + member3.getId());
-            System.out.println("==================");
+            Team findTeam = findMember.getTeam();
+            System.out.println("findTeam = " + findTeam.getName());
 
             tx.commit();  //이 시점에 쿼리 날림
         } catch (Exception e) {
