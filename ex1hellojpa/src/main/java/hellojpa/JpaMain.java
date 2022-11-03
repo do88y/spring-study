@@ -18,22 +18,16 @@ public class JpaMain {
 
         try {
 
-            //저장
-            Team team = new Team();
-            team.setName("TeamA");
-//            team.getMembers().add(member);
-            em.persist(team);
-
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team);
+
             em.persist(member);
+            Team team = new Team();
+            team.setName("teamA");
 
+            team.getMembers().add(member);
 
-
-            em.flush();
-            em.clear();
-
+            em.persist(team);
 
             tx.commit();  //이 시점에 쿼리 날림
         } catch (Exception e) {
