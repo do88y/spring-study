@@ -18,10 +18,8 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member();
-            member.setUsername("member1");
+            Member member = saveMember(em);
 
-            em.persist(member);
             Team team = new Team();
             team.setName("teamA");
 
@@ -37,5 +35,13 @@ public class JpaMain {
         }
         emf.close();  //애플리케이션이 완전히 끝나면 entityManagerFactory를 닫아줘야 함
 
+    }
+
+    private static Member saveMember(EntityManager em) {
+        Member member = new Member();
+        member.setUsername("member1");
+
+        em.persist(member);
+        return member;
     }
 }
