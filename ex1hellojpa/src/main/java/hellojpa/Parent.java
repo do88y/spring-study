@@ -5,18 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Team extends BaseEntity {
+public class Parent {
 
     @Id
     @GeneratedValue
-    @Column(name = "TEAM_ID")
     private Long id;
+
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "TEAM_ID")
-    private List<Member> members = new ArrayList<>();
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Child> childList = new ArrayList<>();
 
+    public void addChild(Child child) {
+        childList.add(child);
+        child.setParent(this);
+    }
 
     public Long getId() {
         return id;
@@ -34,12 +37,11 @@ public class Team extends BaseEntity {
         this.name = name;
     }
 
-    public List<Member> getMembers() {
-        return members;
+    public List<Child> getChildList() {
+        return childList;
     }
 
-    public void setMembers(List<Member> members) {
-        this.members = members;
+    public void setChildList(List<Child> childList) {
+        this.childList = childList;
     }
-
 }

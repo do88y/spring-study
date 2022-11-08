@@ -1,10 +1,9 @@
 package hellojpa;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import java.util.List;
+import org.hibernate.Hibernate;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 public class JpaMain {
     
@@ -18,30 +17,22 @@ public class JpaMain {
 
         try {
 
-            Member member = saveMember(em);
+            Member member = new Member();
+            member.setUsername("user1");
 
-            Team team = new Team();
-            team.setName("teamA");
+            em.persist(member);
 
-            team.getMembers().add(member);
-
-            em.persist(team);
+            em.flush();
+            em.clear();
 
             tx.commit();  //이 시점에 쿼리 날림
         } catch (Exception e) {
             tx.rollback();
+            e.printStackTrace();
         }finally {
             em.close();
         }
         emf.close();  //애플리케이션이 완전히 끝나면 entityManagerFactory를 닫아줘야 함
 
-    }
-
-    private static Member saveMember(EntityManager em) {
-        Member member = new Member();
-        member.setUsername("member1");
-
-        em.persist(member);
-        return member;
     }
 }
