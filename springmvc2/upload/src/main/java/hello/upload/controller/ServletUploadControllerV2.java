@@ -48,7 +48,7 @@ public class ServletUploadControllerV2 {
                 log.info("header {}: {}", headerName, part.getHeader(headerName));
             }
             //편의 메서드
-            //content=disposition; filename
+            //content-disposition; filename
             log.info("submittedFileName={}", part.getSubmittedFileName());
             log.info("size={}", part.getSize()); //part body size
 
