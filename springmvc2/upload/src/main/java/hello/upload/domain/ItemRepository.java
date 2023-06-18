@@ -17,7 +17,7 @@ public class ItemRepository {
         return item;
     }
 
-    public Item fineById(Long id) {
+    public Item findById(Long id) {
         return store.get(id);
     }
 }
