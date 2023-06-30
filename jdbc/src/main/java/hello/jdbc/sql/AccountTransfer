@@ -22,6 +22,7 @@ delete from member;
 insert into member(member_id, money) values ('memberA',10000);
 insert into member(member_id, money) values ('memberB',10000);
 
+
 //계좌이체 실행 SQL - 오류
 set autocommit false;
 update member set money=10000 - 2000 where member_id = 'memberA'; //성공
