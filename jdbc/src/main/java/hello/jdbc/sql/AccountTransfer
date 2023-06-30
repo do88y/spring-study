@@ -1,0 +1,34 @@
+//기본 데이터 입력
+set autocommit true;
+delete from member;
+insert into member(member_id, money) values ('memberA',10000);
+insert into member(member_id, money) values ('memberB',10000);
+
+//계좌이체 실행 - 성공
+set autocommit false;
+update member set money=10000 - 2000 where member_id = 'memberA';
+update member set money=10000 + 2000 where member_id = 'memberB';
+
+//커밋
+commit;
+
+//확인
+select * from member;
+
+--문제상황
+//기본 데이터 입력
+set autocommit true;
+delete from member;
+insert into member(member_id, money) values ('memberA',10000);
+insert into member(member_id, money) values ('memberB',10000);
+
+//계좌이체 실행 SQL - 오류
+set autocommit false;
+update member set money=10000 - 2000 where member_id = 'memberA'; //성공
+update member set money=10000 + 2000 where member_iddd = 'memberB'; //쿼리 예외 발생
+
+//롤백
+rollback;
+
+//확인
+select * from member;
