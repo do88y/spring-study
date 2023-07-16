@@ -13,7 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
- * 트랜잭션 - 트랜잭션 탬플릿
+ * 트랜잭션 - 트랜잭션 탬플릿(트랜잭션 동기화 매니저에 커넥션 보관)
  */
 @Slf4j
 public class MemberServiceV3_2 {
