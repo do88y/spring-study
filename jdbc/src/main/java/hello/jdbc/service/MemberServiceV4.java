@@ -5,12 +5,10 @@ import hello.jdbc.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
-
 /**
  * 예외 누수 문제 해결
  * SQLException 제거
- * 
+ * <p>
  * MemberRepository 인터페이스 의존
  */
 @Slf4j
@@ -23,7 +21,7 @@ public class MemberServiceV4 {
     }
 
     @Transactional
-    public void accountTransfer(String fromId, String toId, int money) throws SQLException {
+    public void accountTransfer(String fromId, String toId, int money) {
         bizLogic(fromId, toId, money);
     }
 
